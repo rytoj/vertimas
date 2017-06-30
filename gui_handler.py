@@ -55,6 +55,7 @@ class GuiHandler(object):
 			column=1,
 			sticky="wens",
 			pady=5)
+		self.root.bind('<Return>', self.__search)
 		self.function_field_1 = tk.Entry(self.root)
 		self.function_field_1.grid(row=0, column=0, sticky="we")
 		self.function_field_1.insert('0', "labas")
@@ -64,7 +65,7 @@ class GuiHandler(object):
 		self.output_text_lt1.insert('1.0', "test" + "\n")
 		self.output_text_lt1.configure(state="disabled")
 
-	def __search(self):
+	def __search(self, event):
 		"""
 		Fill text fields
 		:return:
