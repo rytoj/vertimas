@@ -73,12 +73,14 @@ class GuiHandler(object):
 		# Lithuanian
 		entered_value = self.function_field_1.get()
 		synonyms_lt = get_synonims(entered_value)
+		LOGGER.info(synonyms_lt)
 		if synonyms_lt:
 			self.output_text_lt1.insert('1.0', synonyms_lt + "\n\n")
 
 			entymology_lt = get_lt_word_etymology(strip_lt(entered_value))
 			self.output_text_lt2.insert('1.0', entymology_lt + "\n\n")
 
+		if entered_value:
 			# English
 			translate_to_en = translate_from_lt_english(entered_value)
 			self.output_text_en1.insert('1.0', translate_to_en + "\n\n")

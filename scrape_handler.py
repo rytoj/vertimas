@@ -163,8 +163,11 @@ def get_synonims(word):
 	result = ""
 	synonyms_lt = get_word(strip_lt(word))
 	LOGGER.debug(synonyms_lt)
-	for synonym, link in synonyms_lt:
-		result += synonym + ","
+	try:
+		for synonym, link in synonyms_lt:
+			result += synonym + ","
+	except TypeError:
+		return None
 	return result
 
 
