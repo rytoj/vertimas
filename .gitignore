@@ -51,6 +51,7 @@ settings.cfg
 # Project
 tmp
 settings.cfg.save
+kek.py
 
 # a.out file generated from Kivy
 a.out
