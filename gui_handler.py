@@ -63,6 +63,12 @@ class GuiHandler(object):
 			sticky="wens",
 			pady=5)
 
+		tk.Button(self.root, command=self.__auto_translate, text='Translate').grid(
+			row=1,
+			column=1,
+			sticky="wens",
+			pady=5)
+
 		self.function_field_1 = tk.Entry(self.root)
 		self.function_field_1.grid(row=0, column=0, sticky="we")
 		self.function_field_1.insert('0', "labas")
@@ -79,6 +85,11 @@ class GuiHandler(object):
 		selected = self.output_text_lt1.get(tk.SEL_FIRST, tk.SEL_LAST)
 		translate_to_en = translate_from_lt_english(selected)
 		self.translate_label.configure(text=translate_to_en)
+
+	def __auto_translate(self):
+		entered_value = self.function_field_1.get()
+		translate_to_en = translate_auto(entered_value)
+		self.output_text_en1.insert('1.0', translate_to_en + "\n\n")
 
 	def __search(self):
 		"""

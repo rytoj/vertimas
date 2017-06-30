@@ -153,6 +153,24 @@ def translate_from_lt_english(word):
 	return detect.text
 
 
+def translate_auto(word):
+	"""
+	Translate from lithuanian to english
+	:param word: input work lt
+	:return: output work en
+	"""
+	translator = Translator()
+	if translator.detect(word).lang == "lt":
+		detect = translator.translate(word, src="lt", dest="en")
+		return detect.text
+	if translator.detect(word).lang == "en":
+		detect = translator.translate(word, src="en", dest="lt")
+		return detect.text
+	else:
+		return "Cant translate"
+
+
+
 def get_synonims(word):
 	"""
 	Get only synonims, without links
@@ -172,18 +190,19 @@ def get_synonims(word):
 
 
 def _run_as_standalone():
-	word = "mintis"
-	print(word)
-
+	# word = "mintis"
+	# print(word)
+	#
 	# print(get_synonims(word))
 	# lt_to_en = translate_from_lt_english(word)
 	# print(lt_to_en)
+	print(translate_auto("car"))
 
-	# print()
-	# print("Vertimas: {}".format(detect.text))
-	#
-	# print(get_en_word_etymology(lt_to_en))
-	get_lt_word_etymology("labas")
+# print()
+# print("Vertimas: {}".format(detect.text))
+
+# print(get_en_word_etymology(lt_to_en))
+# get_lt_word_etymology("labas")
 
 
 if __name__ == "__main__":
