@@ -40,6 +40,7 @@ class GuiHandler(object):
 		self.output_text_lt1 = tk.Text(self.root, width=60, height=10)
 		self.output_text_lt1.grid(row=1, column=0, sticky="wens")
 		self.output_text_lt1.bind("<Up>", self.__get_selected_text)
+		self.output_text_lt1.bind("<Button-3>", self.__translate_text)
 
 		self.output_text_en1 = tk.Text(self.root, width=60, height=10)
 		self.output_text_en1.grid(row=1, column=1, sticky="wens")
@@ -84,9 +85,6 @@ class GuiHandler(object):
 			etymology = get_en_word_etymology(translate_to_en)
 			self.output_text_en2.insert('1.0', etymology + "\n\n")
 
-
-
-
 	def __center_window(self):
 		"""
 		Centers the window of tkinter.
@@ -106,11 +104,25 @@ class GuiHandler(object):
 		self.root.geometry('%dx%d+%d+%d' % (w, h, x, y))
 
 	def __get_selected_text(self, event):
+		"""
+		Get selected text, and put it on search field.
+		:param event:
+		:return:
+		"""
 		selected = self.output_text_lt1.get(tk.SEL_FIRST, tk.SEL_LAST)
 		LOGGER.info(selected)
-
 		self.function_field_1.delete(0, tk.END)
 		self.function_field_1.insert(0, selected)
+
+	def __translate_text(self, event):
+		"""
+		Translate selected text, and display it
+		:param event:
+		:return:
+		"""
+		selected = self.output_text_lt1.get(tk.SEL_FIRST, tk.SEL_LAST)
+		translate_to_en = translate_from_lt_english(selected)
+		self.output_text_en1.insert('1.0', translate_to_en + "\n\n")
 
 
 if __name__ == "__main__":
