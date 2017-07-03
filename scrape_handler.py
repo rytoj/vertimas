@@ -45,6 +45,26 @@ def srape_sinonimai(search_string, custom_string=""):
 	return words
 
 
+def scrape_lt_word_meaning(search_string):
+	"""
+	Scraping from
+	http://www.zodynas.lt/terminu-zodynas/P/patirtis
+	:param search_string:
+	:return:
+	"""
+	first_letter = search_string[0]
+	word_meaning = ""
+	link = "http://www.zodynas.lt/terminu-zodynas/" + first_letter + "/" + search_string
+	soup = make_soup(link)
+	for x in soup.find("h1", class_="m-t0 capitilize"):
+		try:
+			word_meaning = x.next.text
+			logging.debug(word_meaning)
+		except AttributeError:
+			pass
+	return word_meaning
+
+
 def strip_lt(word_to_parse):
 	"""
 	Strips lt letters and repleces with counterparts like ą to ą
@@ -153,6 +173,17 @@ def translate_from_lt_english(word):
 	return detect.text
 
 
+def translate_from_en_to_lt(word):
+	"""
+	Translate from lithuanian to english
+	:param word: input work lt
+	:return: output work en
+	"""
+	translator = Translator()
+	detect = translator.translate(word, src="en", dest="lt")
+	return detect.text
+
+
 def translate_auto(word):
 	"""
 	Translate from lithuanian to english
@@ -168,7 +199,6 @@ def translate_auto(word):
 		return detect.text
 	else:
 		return "Cant translate"
-
 
 
 def get_synonims(word):
@@ -190,13 +220,16 @@ def get_synonims(word):
 
 
 def _run_as_standalone():
-	# word = "mintis"
-	# print(word)
-	#
+	word = "rytas"
+	# # print(word)
+	# #
 	# print(get_synonims(word))
-	# lt_to_en = translate_from_lt_english(word)
-	# print(lt_to_en)
-	print(translate_auto("car"))
+	print(scrape_lt_word_meaning(word))
+
+# lt_to_en = translate_from_lt_english(word)
+# print(lt_to_en)
+# print(translate_auto("car"))
+
 
 # print()
 # print("Vertimas: {}".format(detect.text))
