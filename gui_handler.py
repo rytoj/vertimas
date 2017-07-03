@@ -82,9 +82,10 @@ class GuiHandler(object):
 		self.output_text_lt1.configure(state="disabled")
 
 	def __on_enter(self, event):
-		selected = self.output_text_lt1.get(tk.SEL_FIRST, tk.SEL_LAST)
-		translate_to_en = translate_from_lt_english(selected)
-		self.translate_label.configure(text=translate_to_en)
+			focused_text = self.root.focus_get()
+			selected = focused_text.get(tk.SEL_FIRST, tk.SEL_LAST)
+			translate_to_en = translate_auto(selected)
+			self.translate_label.configure(text=translate_to_en)
 
 	def __auto_translate(self):
 		entered_value = self.function_field_1.get()
@@ -98,18 +99,19 @@ class GuiHandler(object):
 		"""
 
 		# Lithuanian
-		entered_value = self.function_field_1.get()
-		synonyms_lt = get_synonims(entered_value)
+		entered_lt_value_ = self.function_field_1.get()
+		entered_value = translate_auto(entered_lt_value_)
+		synonyms_lt = get_synonims(entered_lt_value_)
 		LOGGER.info(synonyms_lt)
 		if synonyms_lt:
 			self.output_text_lt1.insert('1.0', synonyms_lt + "\n\n")
 
-			entymology_lt = get_lt_word_etymology(strip_lt(entered_value))
+			entymology_lt = get_lt_word_etymology(strip_lt(entered_lt_value_))
 			self.output_text_lt2.insert('1.0', entymology_lt + "\n\n")
 
 		if entered_value:
 			# English
-			translate_to_en = translate_from_lt_english(entered_value)
+			translate_to_en = translate_from_lt_english(entered_lt_value_)
 			self.output_text_en1.insert('1.0', translate_to_en + "\n\n")
 			etymology = get_en_word_etymology(translate_to_en)
 			self.output_text_en2.insert('1.0', etymology + "\n\n")
