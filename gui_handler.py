@@ -102,10 +102,12 @@ class GuiHandler(object):
 		entered_lt_value_ = self.function_field_1.get()
 		entered_value = translate_auto(entered_lt_value_)
 		synonyms_lt = get_synonims(entered_lt_value_)
+		meaning_lt = scrape_lt_word_meaning(entered_lt_value_)
 		LOGGER.info(synonyms_lt)
 		if synonyms_lt:
 			self.output_text_lt1.insert('1.0', synonyms_lt + "\n\n")
-
+			self.output_text_lt1.insert('1.0', meaning_lt + "\n\n")
+			
 			entymology_lt = get_lt_word_etymology(strip_lt(entered_lt_value_))
 			self.output_text_lt2.insert('1.0', entymology_lt + "\n\n")
 
