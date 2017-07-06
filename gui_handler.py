@@ -92,7 +92,7 @@ class GuiHandler(object):
 		translate_to_en = translate_auto(entered_value)
 		self.output_text_en1.insert('1.0', translate_to_en + "\n\n")
 
-	def __search(self):
+	def __search(self, *args, **kwargs):
 		"""
 		Fill text fields
 		:return:
